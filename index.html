@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>北京地铁计费系统</title>
+    <style>
+        body{
+            background:url("./images/bg2.jpg");
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            background-attachment:fixed;
+        }
+        .news .content .op-subway-bord p{padding:0;margin:0;font-size:13px;line-height:24px;}
+        .op-subway-bord ul,.op-subway-bord li,.op-subway-bord p{list-style:none;padding:0;margin:0;}
+        .op-subway-bord {background-color: white;height: 250px;border: 3px solid #666;width: 450px;font-size: 13px;line-height: 1.54;word-wrap: break-word;margin: auto;margin-top:5%;}
+        .op-subway-main {height: 123px;padding: 0 10px;position: relative;}
+        .op-subway-box {height: 25px;margin-top: 12px;margin-left: 39px;width: 465px;}
+        .op-subway-line {cursor: pointer;list-style: none;width: 140px;height: 24px;color: #aaa;line-height: 24px;border: 1px solid #bdbdbd;float: left;position: relative;z-index: 9;border-top: 1px solid #999;border-left: 1px solid #999;}
+        .op-subway-line em {font-style: normal;font-size: 13px;color: #333;padding-left: 7px;}
+        .op-subway-line em span {display: block;position: absolute;width: 9px;height: 9px;_width: 9px;_height: 3px;left: 8px;top: 8px;_top: 5px;}
+        .op-subway-hierarchy {z-index: 100;}
+        .op-subway-ul {background:#fff;z-index:999;height:188px;display:none;position:absolute;border:1px solid #bbb;top:24px;width:140px;left:-1px;overflow-y:scroll;overflow-x:hidden}
+        .op-subway-ul li {cursor: pointer;background: #fff;width: 103px;height: 31px;list-style: none;line-height: 31px;color: #333;padding-left: 22px;position: relative;font-size: 13px;}
+        .op-subway-ul li span {display: block;position: absolute;width: 9px;height: 9px;_width: 9px;_height: 3px;left: 8px;top: 11px;_top: 5px;}
+        .op-subway-jg {width: 20px;float: left;text-align: center;height: 24px;line-height: 24px;font-weight: 700;color: #ccc;}
+        .op-subway-station {cursor: pointer;width: 140px;height: 24px;line-height: 24px;color: #aaa;border: 1px solid #bdbdbd;float: left;position: relative;background: #f7f7f7;border-top: 1px solid #999;border-left: 1px solid #999;}
+        .op-subway-k {width: 25px;height: 24px;top: 0;position: absolute;right: 0;border-left: 1px solid #d9d9d9;background: url(http://imgbdb2.bendibao.com/images/icons.jpg) no-repeat center center;}
+        .op-subway-station em {font-style: normal;font-size: 13px;padding: 0 5px;}
+        .op-subway-ulk {z-index: 999;display: none;width: 300px;height: auto;position: absolute;top: 24px;left: -1px;border: 1px solid #bbb;background: #fff;}
+        .op-subway-ulk li {cursor:pointer;background:#fff;list-style:none;width:85px;height:30px;float:left;line-height:30px;padding-left:12px;color:#333;font-size:13px}
+        .op-subway-box-end {clear: both;}
+        .op-subway-calc-false {position: absolute;left: 10px;display: inline-block;cursor: pointer;color: #b8b8b8;background: #f5f5f5;border: 1px solid #d9d9d9;width: 82px;height: 26px;margin-top: 12px;margin-left: 39px;text-align: center;line-height: 26px;font-size: 13px;}
+        .op-subway-calc-fare {border: 0;position: absolute;left: 3px;cursor: pointer;width: 82px;height: 26px;background: #3333cc;margin-top: 12px;margin-left: 46px;_margin-top: 8px;text-align: center;line-height: 26px;color: #fff;font-size: 13px;}
+        .op-subway-ts {font-size: 13px;position: absolute;left: 150px;bottom: 23px;display: none;_bottom: 0;_top: 92px;}
+        .op-subway-tab {margin-top: 54px;height: 28px;border-bottom: 1px solid #d9d9d9;background: #fafafa;display: none;width: 100%;}
+        .op-subway-on {list-style: none;border-right: 1px solid #dedede;border-left: 1px solid #dedede;border-top: 2px solid #3333cc;color: #333;border-bottom: 1px solid #fff;border-bottom: 1px solid #fff;background: #fff;_position: relative;_top: 1px;z-index: 0;width: 91px;}
+        .op-subway-li {border-left: 1px solid #fff;list-style: none;width: 180px;float: left;height: 26px;text-align: center;line-height: 28px;color: #666;font-size: 13px;background: #fafafa;}
+        .op-subway-footer {display: none;overflow: hidden;height: auto;padding-top: 12px;_margin-top: 12px;width: 100%;clear: both;_margin: 0 auto;}
+        .op-subway-content {height: auto;_margin-top: -25px;_width: 100%;clear: both;}
+        .op-subway-text {margin: 0 auto;clear: both;padding: 0 2.5%;}
+        .op-subway-title {line-height: 16px;font-size: 13px;color: #666;}
+        .op-subway-span {font-size: 20px;color: #333;height: 35px;line-height: 35px;margin-top: 5px;font-family: "Microsoft YaHei";}
+        .op-subway-increase {color: darkred;font: inherit;font-weight: 700;font-size: 25px}
+        .op-subway-one {background:#ce0000}.op-subway-two {background:#0063cf}.op-subway-four {background:#00cccd}.op-subway-five {background:#9b0067}.op-subway-six {background:#ec9a00}.op-subway-seven {background:#006731}.op-subway-eight {background:#accc00}.op-subway-nine {background:#0096ff}.op-subway-ten {background:#ffcd10}.op-subway-thirteen {background:#d49186}.op-subway-fourteen {background:#ff3600}.op-subway-batong, .op-subway-fifteen {background:#cf0000}.op-subway-changpi {background:#c60082}.op-subway-yizhuan {background:#ff3500}.op-subway-fangsan {background:#d7333b}.op-subway-jichang {background:#b798be}
+        .op-subway-clearfix {clear:both}</style>
+</head>
+<body>
+<div class="content" id="bo">
+    <div style="font-size: 25px;margin-left: 33%;margin-top: 8%"><strong >北京地铁站计价系统界面版——胡成成</strong></div>
+    <div class="op-subway-bord">
+
+        <div class="op-subway-main">
+            <div class="op-subway-box op-subway-box-start">
+                <div class="op-subway-line op-subway-hierarchy"><em>起始站</em> <span class="op-subway-k"></span>
+                    <ul class="op-subway-ul"></ul>
+                </div>
+                    <p class="op-subway-jg">-</p>
+                <div class="op-subway-station op-subway-hierarchy ">
+                    <span class="op-subway-k"></span><em class="op-subway-hierarchy-start">选择车站</em>
+                    <ul class="op-subway-ulk"></ul>
+                </div>
+            </div>
+            <div class="op-subway-box op-subway-box-end"><div class="op-subway-line"><em>终点站</em>
+                    <span class="op-subway-k"></span>
+                    <ul class="op-subway-ul"></ul>
+                </div>
+                    <p class="op-subway-jg">-</p>
+                <div class="op-subway-station op-subway-station-end"><em>选择车站</em>
+                    <span class="op-subway-k"></span>
+                    <ul class="op-subway-ulk"></ul>
+                </div>
+                <div class="op-subway-clearfix"></div>
+            </div>
+            <div class="op-subway-clearfix">
+                <span class="op-subway-calc-false OP_LOG_BTN" data-click="{'fm':'beha'}">开始查询</span>
+                <span class="op-subway-ts">请输入您的起点和终点</span>
+            </div>
+            <div class="op-subway-tab">
+                <ul>
+                    <li class="op-subway-li op-subway-on">票价计算结果</li>
+                    <li class="op-subway-li">作者：胡成成-通信1701</li>
+                </ul>
+            </div>
+        </div>
+        <div class="op-subway-footer">
+            <div class="op-subway-content op-subway-content2">
+                <div class="op-subway-text">
+                    <p class="op-subway-title">计费公式：起步6公里内每人次3元，6-12公里每人次4元，12-32公里每10公里加1元，32公里以上每20公里加1元，票价不封顶。</p>
+                    <div class="op-subway-fareinfo">
+                        <p class="op-subway-p op-subway-spacing">~~~</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p><strong></strong></p>
+    <p></p>
+
+</div>
+</body>
+<script src="./JavaScript/jquery.js"></script>
+<script src="./JavaScript/bjditie.js"></script>
+</html>
